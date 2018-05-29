@@ -2,8 +2,6 @@
 
 #include "Engine.h"
 
-
-
 class Game
 {
 public:
@@ -23,7 +21,7 @@ private:
 	bool soundStatus;
 	Level level;
 	sf::Music music;
-	sf::Text name;
+	sf::Text headline;
 	sf::Font font;
 	sf::Texture Background, Sound_button;
 	sf::Sprite background, sound_button;
@@ -32,5 +30,7 @@ private:
 	void single();
 	void lvl();
 	void save();
+
+	Engine engine;
 };
 

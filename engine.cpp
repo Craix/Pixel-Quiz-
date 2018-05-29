@@ -1,10 +1,8 @@
 #include "Engine.h"
 
 
-Engine::Engine(sf::RenderWindow &window, sf::Sprite &Background, sf::Font &font, int selected_lvl, sf::Sprite &sound_button, sf::Music &musicc) : music(musicc)
+Engine::Engine()
 { 
-	
-
 	if (!tiled_set.loadFromFile("graphic//tiled.png"))
 	{
 		MessageBox(NULL, "Failed to load image tiled_set.png", "ERROR", NULL);
@@ -52,16 +50,17 @@ Engine::Engine(sf::RenderWindow &window, sf::Sprite &Background, sf::Font &font,
 	restart.setOrigin(32, 32);
 	restart.setPosition(240, 320); 
 
-	text.setCharacterSize(50);
-	text.setFont(font);
-	text.setStyle(sf::Text::Bold); 
-	text.setFillColor(sf::Color::Color(255, 153, 0)); // #ff9900
-	text.setPosition(0, 0);
+}
 
-	money_animation_frame = 0;
+Engine::~Engine() {};
 
+void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Sprite &sound_button, int selected_lvl, sf::Music &music, bool &soudStatus, sf::Text &text)
+{
 	tp = false;
 	wat = false;
+	sound_status = &soudStatus;
+	money_animation_frame = 0;
+	text.setPosition(0, 0);
 
 	level.loadSave();
 
@@ -72,17 +71,12 @@ Engine::Engine(sf::RenderWindow &window, sf::Sprite &Background, sf::Font &font,
 	}
 
 	player.coins = 0;
+
 	player.Respawn(level.dane.xy);
 
-	runEngine(window, Background, font, sound_button);
-}
-
-Engine::~Engine() {};
-
-void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Font &font, sf::Sprite &sound_button)
-{
 	game_status = true;
 
+	//loop
 	while (game_status)
 	{
 		time = clock.getElapsedTime();
@@ -108,6 +102,7 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Fon
 		sf::Vector2f mouse(sf::Mouse::getPosition(window));
 
 		sf::Event event;
+
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
@@ -288,7 +283,7 @@ void Engine::update(sf::Vector2f xy)
 
 		player.coins = 0;
 		player.Respawn(level.dane.xy);
-		if (music.getStatus() == sf::Sound::Status::Playing)
+		if (sound_status)
 		{
 			sound_effect[fire].play();
 		}	
@@ -302,7 +297,7 @@ void Engine::update(sf::Vector2f xy)
 	{
 		level.poziom[(int)xy.x][(int)xy.y] = level.SNOW;
 		player.coins++;
-		if (music.getStatus() == sf::Sound::Status::Playing)
+		if (sound_status)
 		{
 			sound_effect[coin].play();
 		}
@@ -321,7 +316,7 @@ void Engine::update(sf::Vector2f xy)
 			{
 				if (level.poziom[(int)level.dane.DK[i].val1.x][(int)level.dane.DK[i].val1.y] == level.DOOR)
 				{
-					if (music.getStatus() == sf::Sound::Status::Playing)
+					if (sound_status)
 					{
 						sound_effect[coin].play();
 					}
@@ -354,7 +349,7 @@ void Engine::update(sf::Vector2f xy)
 						player.Respawn(sf::Vector2f(level.dane.TP[i].val1.x * 16 + 8, level.dane.TP[i].val1.y * 16 + 8 + 64)); 
 						tp = true; 
 
-						if (music.getStatus() == sf::Sound::Status::Playing)
+						if (sound_status)
 						{
 							sound_effect[teleport].play();
 						}
@@ -373,7 +368,7 @@ void Engine::update(sf::Vector2f xy)
 						tp = true; 
 
 
-						if (music.getStatus() == sf::Sound::Status::Playing)
+						if (sound_status)
 						{
 							sound_effect[teleport].play();
 						}
@@ -390,7 +385,7 @@ bool Engine::block(sf::Vector2f xy)
 {
 	if (level.poziom[(int)xy.x][(int)xy.y] == level.WATER)
 	{
-		if (music.getStatus() == sf::Sound::Status::Playing)
+		if (sound_status)
 		{
 			if (!wat)
 			{

@@ -8,10 +8,10 @@
 class Engine 
 {
 public:
-	Engine(sf::RenderWindow &window, sf::Sprite &Background, sf::Font &font, int selected_lvl, sf::Sprite &sound_button, sf::Music &musicc);
+	Engine();
 	~Engine(void);
 
-	void runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Font &font, sf::Sprite &sound_button);
+	void runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Sprite &sound_button, int selected_lvl, sf::Music &music, bool &soudStatus, sf::Text &text);
 	bool colision(sf::Vector2f xy);
 	void water(sf::Vector2f xy);
 	void update(sf::Vector2f xy);
@@ -23,13 +23,8 @@ private:
 	Player player;
 	Level level;
 
-	sf::Text text;
-	sf::Music &music;
-
 	sf::RectangleShape race;
-
-	bool tp, wat, game_status;
-
+	bool tp, wat, game_status, sound_status; 
 	sf::SoundBuffer buffer[4];
 	sf::Sound sound_effect[4];
 

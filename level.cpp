@@ -31,6 +31,11 @@ bool Level::loadMap(int selected_lvl)
 	}
 	else
 	{
+		dane.DK.clear();
+		dane.TP.clear();
+
+
+
 		file_f >> key_nr;
 
 		for (int i = 0; i < key_nr; i++)

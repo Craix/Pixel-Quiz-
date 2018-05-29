@@ -40,11 +40,11 @@ Game::Game()
 
 	background.setTexture(Background);
 
-	name.setFont(font);
-	name.setCharacterSize(50);
-	name.setString("Pixel & Quiz");
-	name.setStyle(sf::Text::Bold);
-	name.setFillColor(sf::Color::Color(255, 153, 0)); // #ff9900
+	headline.setFont(font);
+	headline.setCharacterSize(50);
+	headline.setString("Pixel & Quiz");
+	headline.setStyle(sf::Text::Bold);
+	headline.setFillColor(sf::Color::Color(255, 153, 0)); // #ff9900
 
 	soundStatus = true;
 
@@ -87,9 +87,9 @@ void Game::runGame()
 void Game::menu()
 {
 	 width = window.getSize().x;
-	 height = window.getSize().x;
+	 height = window.getSize().y;
 
-	name.setPosition(width / 2 - name.getGlobalBounds().width / 2, 0);
+	 headline.setPosition(width / 2 - headline.getGlobalBounds().width / 2, 0);
 
 	std::string str[] = { "Play","LvL", "Save & Exit" };
 
@@ -163,7 +163,7 @@ void Game::menu()
 
 		window.clear();
 		window.draw(background);
-		window.draw(name);
+		window.draw(headline);
 
 		for (int i = 0; i<3; i++)
 		{
@@ -176,7 +176,8 @@ void Game::menu()
 }
 void Game::single()
 {
-	Engine engine(window, background, font, wybrany_lvl, sound_button, music);
+
+	engine.runEngine(window, background, sound_button, wybrany_lvl, music, soundStatus, headline);
 
 	state = MENU;
 }
@@ -255,7 +256,7 @@ void Game::lvl()
 
 		window.clear(sf::Color::Black);
 		window.draw(background);
-		window.draw(name);
+		window.draw(headline);
 		window.draw(sound_button);
 
 		for (int i = 0; i < 16; i++)
