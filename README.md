@@ -11,6 +11,13 @@ Zadaniem gracza jest rozwi¹zanie wszystkich 15 poziomów.
 - Gracz ma mo¿liwoœæ powtórzenie ka¿dego poziomu oraz zapisu stanu gry.
 
 
+[Instalacja]
+
+Pobierz plik .rar oraz wypakuj. W wypakowanym folderze odszukaj 
+plik .exe i uruchom go. Gotowe! 
+
+Link do paczki: https://drive.google.com/open?id=1DFq-swUtkDEGnx2IU4DrHDEQNKbjfe5E
+
 
 [Podzia³ plików]
 
