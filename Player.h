@@ -14,9 +14,9 @@ public:
 	Player();
 	~Player();
 	int coins;
-	void Respawn(sf::Vector2f xy); 
-	void Move(sf::Vector2f xy); 
+	void Respawn(sf::Vector2i xy); 
+	void Move(sf::Vector2i xy); 
 	void Draw(sf::RenderWindow &win);
-	sf::Vector2f getPosition();
+	sf::Vector2i getPosition();
 	void animation();
 };

@@ -13,7 +13,7 @@ private:
 	enum GameState { MENU, GAME, LVL, SAVE, END };
 	GameState state;
 
-	unsigned int width, height;
+	int width, height;
 
 	int wybrany_lvl;
 	sf::Text text[3];

@@ -99,7 +99,7 @@ void Game::menu()
 		text[i].setCharacterSize(40);
 
 		text[i].setString(str[i]);
-		text[i].setPosition((float)width / 2 - text[i].getGlobalBounds().width / 2,(float)128 + i * ((height - 64) / 3));
+		text[i].setPosition(sf::Vector2f(static_cast<float>(width - text[i].getGlobalBounds().width) / 2, static_cast<float>(128 + i * (height - 64) / 3)));
 	}
 
 	while (state == MENU)
@@ -210,7 +210,7 @@ void Game::lvl()
 	{
 		for (int x = 0; x < 4; x++)
 		{
-			lvl_field[y * 4 + x].setPosition((float)64 + 128 * x, (float) 128 + 128 * y);
+			lvl_field[y * 4 + x].setPosition(sf::Vector2f(sf::Vector2i(64 + 128 * x, 128 + 128 * y)));
 			lvl_field[y * 4 + x].setTexture(Open);
 		}
 	}

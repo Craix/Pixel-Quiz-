@@ -58,7 +58,9 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 {
 	tp = false;
 	wat = false;
+
 	sound_status = &soudStatus;
+
 	money_animation_frame = 0;
 	text.setPosition(0, 0);
 
@@ -76,12 +78,11 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 
 	game_status = true;
 
-	//loop
 	while (game_status)
 	{
 		time = clock.getElapsedTime();
 
-		if ((int)time.asSeconds() == 1)
+		if (static_cast<int>(time.asSeconds()) == 1)
 		{
 			player.animation();
 			animation();
@@ -111,9 +112,9 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 			}
 			if ((sound_button.getGlobalBounds().contains(mouse) && event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left))
 			{
+				sound_status = !sound_status;
 
-
-				if (music.getStatus() == sf::Sound::Status::Paused)
+				if (sound_status)
 				{
 					sound_button.setTextureRect(sf::IntRect(0, 0, 32, 32));
 					music.play();
@@ -129,38 +130,38 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 			{
 				if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up)
 				{
-					if (colision(player.getPosition() + sf::Vector2f(0, -1)) == false) 
+					if (colision(player.getPosition() + sf::Vector2i(0, -1)) == false) 
 					{
 						tp = false;
 						water(player.getPosition());
-						player.Move(sf::Vector2f(0, -16));
+						player.Move(sf::Vector2i(0, -16));
 					}
 				}
 				if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)
 				{
-					if (colision(player.getPosition() + sf::Vector2f(0, 1)) == false) 
+					if (colision(player.getPosition() + sf::Vector2i(0, 1)) == false) 
 					{
 						tp = false;
 						water(player.getPosition());
-						player.Move(sf::Vector2f(0, 16));
+						player.Move(sf::Vector2i(0, 16));
 					}
 				}
 				if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)
 				{
-					if (colision(player.getPosition() + sf::Vector2f(-1, 0)) == false) 
+					if (colision(player.getPosition() + sf::Vector2i(-1, 0)) == false) 
 					{
 						tp = false;
 						water(player.getPosition());
-						player.Move(sf::Vector2f(-16, 0));
+						player.Move(sf::Vector2i(-16, 0));
 					}
 				}
 				if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)
 				{
-					if (colision(player.getPosition() + sf::Vector2f(1, 0)) == false) 
+					if (colision(player.getPosition() + sf::Vector2i(1, 0)) == false) 
 					{
 						tp = false;
 						water(player.getPosition());
-						player.Move(sf::Vector2f(16, 0));
+						player.Move(sf::Vector2i(16, 0));
 					}
 				}
 			}
@@ -213,17 +214,17 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 						level.poziom[i][j] = level.FIRE; 
 					}
 
-					tiled[level.poziom[i][j] - 1].setPosition((float)level.title_size * i, (float)level.title_size * j + 64);
+					tiled[level.poziom[i][j] - 1].setPosition(sf::Vector2f(sf::Vector2i(level.title_size * i, level.title_size * j + 64)));
 					window.draw(tiled[level.poziom[i][j] - 1]);
 				}
 				else if (level.poziom[i][j] == level.WATER)
 				{						
-					tiled[level.poziom[i][j] - 1].setPosition((float)level.title_size * i, (float)level.title_size * j + 64);
+					tiled[level.poziom[i][j] - 1].setPosition(sf::Vector2f(sf::Vector2i(level.title_size * i, level.title_size * j + 64)));
 					window.draw(tiled[level.poziom[i][j] - 1]);
 				}
 				else
 				{
-					tiled[level.poziom[i][j] - 1].setPosition((float)level.title_size * i, (float)level.title_size * j + 64);
+					tiled[level.poziom[i][j] - 1].setPosition(sf::Vector2f(sf::Vector2i(level.title_size * i, level.title_size * j + 64)));
 					window.draw(tiled[level.poziom[i][j] - 1]);
 				}
 			}
@@ -249,10 +250,10 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 	level.saveSave();
 
 }
-bool Engine::colision(sf::Vector2f xy)
+bool Engine::colision(sf::Vector2i xy)
 {
-	if (level.poziom[(int)xy.x][(int)xy.y] == level.ICE || level.poziom[(int)xy.x][(int)xy.y] == level.PADLOCK 
-		|| level.poziom[(int)xy.x][(int)xy.y] == level.DOOR)
+	if (level.poziom[xy.x][xy.y] == level.ICE || level.poziom[xy.x][xy.y] == level.PADLOCK
+		|| level.poziom[xy.x][xy.y] == level.DOOR)
 	{
 		return true;
 	}
@@ -261,18 +262,18 @@ bool Engine::colision(sf::Vector2f xy)
 		return false;
 	}
 }
-void Engine::water(sf::Vector2f xy)
+void Engine::water(sf::Vector2i xy)
 {
-	if (level.poziom[(int)xy.x][(int)xy.y] == level.SNOW)
+	if (level.poziom[xy.x][xy.y] == level.SNOW)
 	{
-		level.poziom[(int)xy.x][(int)xy.y] = level.WATER;
+		level.poziom[xy.x][xy.y] = level.WATER;
 	}
 }
-void Engine::update(sf::Vector2f xy)
+void Engine::update(sf::Vector2i xy)
 {
 	#pragma region next_lvl
 
-	if (level.poziom[(int)xy.x][(int)xy.y] == level.FIRE)
+	if (level.poziom[xy.x][xy.y] == level.FIRE)
 	{
 		level.lvl++;
 		if (!level.loadMap(level.lvl + 1))
@@ -293,9 +294,9 @@ void Engine::update(sf::Vector2f xy)
 
 	#pragma region coin
 
-	if (level.poziom[(int)xy.x][(int)xy.y] == level.MONEY)
+	if (level.poziom[xy.x][xy.y] == level.MONEY)
 	{
-		level.poziom[(int)xy.x][(int)xy.y] = level.SNOW;
+		level.poziom[xy.x][xy.y] = level.SNOW;
 		player.coins++;
 		if (sound_status)
 		{
@@ -308,20 +309,20 @@ void Engine::update(sf::Vector2f xy)
 	#pragma region door_key
 
 
-	if (level.poziom[(int)xy.x][(int)xy.y] == level.KEY)
+	if (level.poziom[xy.x][xy.y] == level.KEY)
 	{
 		for (size_t i = 0; i < level.dane.DK.size(); i++)
 		{
-			if (level.dane.DK[i].val0 == sf::Vector2f((float)xy.x, (float)xy.y))
+			if (level.dane.DK[i].val0 == sf::Vector2i(xy.x, xy.y))
 			{
-				if (level.poziom[(int)level.dane.DK[i].val1.x][(int)level.dane.DK[i].val1.y] == level.DOOR)
+				if (level.poziom[level.dane.DK[i].val1.x][level.dane.DK[i].val1.y] == level.DOOR)
 				{
 					if (sound_status)
 					{
 						sound_effect[coin].play();
 					}
-					level.poziom[(int)level.dane.DK[i].val1.x][(int)level.dane.DK[i].val1.y] = level.MONEY;
-					level.poziom[(int)level.dane.DK[i].val0.x][(int)level.dane.DK[i].val0.y] = level.MONEY;
+					level.poziom[level.dane.DK[i].val1.x][level.dane.DK[i].val1.y] = level.MONEY;
+					level.poziom[level.dane.DK[i].val0.x][level.dane.DK[i].val0.y] = level.MONEY;
 				}
 			}
 		}
@@ -332,21 +333,21 @@ void Engine::update(sf::Vector2f xy)
 
 	#pragma region teleport
 
-	if (level.poziom[(int)xy.x][(int)xy.y] == level.ACTIVE_TP) 
+	if (level.poziom[xy.x][xy.y] == level.ACTIVE_TP) 
 	{
 
 
 		for (size_t i = 0; i < level.dane.TP.size(); i++)
 		{	
-			if (level.dane.TP[i].val0 == sf::Vector2f((float)xy.x, (float)xy.y))  
+			if (level.dane.TP[i].val0 == sf::Vector2i(xy.x, xy.y))  
 			{
-				if (level.poziom[(int)level.dane.TP[i].val1.x][(int)level.dane.TP[i].val1.y] == level.ACTIVE_TP || 
-					level.poziom[(int)level.dane.TP[i].val1.x][(int)level.dane.TP[i].val1.y] == level.BROKEN_TP)
+				if (level.poziom[level.dane.TP[i].val1.x][level.dane.TP[i].val1.y] == level.ACTIVE_TP || 
+					level.poziom[level.dane.TP[i].val1.x][level.dane.TP[i].val1.y] == level.BROKEN_TP)
 				{
 
 					if (!tp)
 					{
-						player.Respawn(sf::Vector2f(level.dane.TP[i].val1.x * 16 + 8, level.dane.TP[i].val1.y * 16 + 8 + 64)); 
+						player.Respawn(sf::Vector2i(level.dane.TP[i].val1.x * 16 + 8, level.dane.TP[i].val1.y * 16 + 8 + 64)); 
 						tp = true; 
 
 						if (sound_status)
@@ -357,14 +358,14 @@ void Engine::update(sf::Vector2f xy)
 				}
 			}
 
-			if (level.dane.TP[i].val1 == sf::Vector2f((float)xy.x, (float)xy.y))
+			if (level.dane.TP[i].val1 == sf::Vector2i(xy.x, xy.y))
 			{
-				if (level.poziom[(int)level.dane.TP[i].val0.x][(int)level.dane.TP[i].val0.y] == 9 ||
-					level.poziom[(int)level.dane.TP[i].val0.x][(int)level.dane.TP[i].val0.y] == 10)
+				if (level.poziom[level.dane.TP[i].val0.x][level.dane.TP[i].val0.y] == 9 ||
+					level.poziom[level.dane.TP[i].val0.x][level.dane.TP[i].val0.y] == 10)
 				{
 					if (!tp)
 					{
-						player.Respawn(sf::Vector2f(level.dane.TP[i].val0.x * 16 + 8, level.dane.TP[i].val0.y * 16 + 8 + 64));
+						player.Respawn(sf::Vector2i(level.dane.TP[i].val0.x * 16 + 8, level.dane.TP[i].val0.y * 16 + 8 + 64));
 						tp = true; 
 
 
@@ -381,9 +382,9 @@ void Engine::update(sf::Vector2f xy)
 
 	#pragma endregion
 }
-bool Engine::block(sf::Vector2f xy)
+bool Engine::block(sf::Vector2i xy)
 {
-	if (level.poziom[(int)xy.x][(int)xy.y] == level.WATER)
+	if (level.poziom[xy.x][xy.y] == level.WATER)
 	{
 		if (sound_status)
 		{
@@ -410,10 +411,10 @@ void Engine::color(sf::RenderWindow &win)
 		race.setFillColor(level.dane.DK[i].color);
 		race.setSize(sf::Vector2f(16, 16));
 
-		race.setPosition(sf::Vector2f(level.dane.DK[i].val0.x * 16, level.dane.DK[i].val0.y * 16 + 64));
+		race.setPosition(sf::Vector2f(sf::Vector2i(level.dane.DK[i].val0.x * 16, level.dane.DK[i].val0.y * 16 + 64)));
 		win.draw(race);
 
-		race.setPosition(sf::Vector2f(level.dane.DK[i].val1.x * 16, level.dane.DK[i].val1.y * 16 + 64));
+		race.setPosition(sf::Vector2f(sf::Vector2i(level.dane.DK[i].val1.x * 16, level.dane.DK[i].val1.y * 16 + 64)));
 		win.draw(race);
 	}
 
@@ -422,10 +423,10 @@ void Engine::color(sf::RenderWindow &win)
 		race.setFillColor(level.dane.TP[j].color);
 		race.setSize(sf::Vector2f(16, 16));
 
-		race.setPosition(sf::Vector2f(level.dane.TP[j].val0.x * 16, level.dane.TP[j].val0.y * 16 + 64));
+		race.setPosition(sf::Vector2f(sf::Vector2i(level.dane.TP[j].val0.x * 16, level.dane.TP[j].val0.y * 16 + 64)));
 		win.draw(race);
 
-		race.setPosition(sf::Vector2f(level.dane.TP[j].val1.x * 16, level.dane.TP[j].val1.y * 16 + 64));
+		race.setPosition(sf::Vector2f(sf::Vector2i(level.dane.TP[j].val1.x * 16, level.dane.TP[j].val1.y * 16 + 64)));
 		win.draw(race);
 	}
 

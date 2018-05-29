@@ -12,11 +12,11 @@ public:
 	~Engine(void);
 
 	void runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Sprite &sound_button, int selected_lvl, sf::Music &music, bool &soudStatus, sf::Text &text);
-	bool colision(sf::Vector2f xy);
-	void water(sf::Vector2f xy);
-	void update(sf::Vector2f xy);
+	bool colision(sf::Vector2i xy);
+	void water(sf::Vector2i xy);
+	void update(sf::Vector2i xy);
 	void color(sf::RenderWindow &win);
-	bool block(sf::Vector2f xy);
+	bool block(sf::Vector2i xy);
 	void animation();
 
 private:

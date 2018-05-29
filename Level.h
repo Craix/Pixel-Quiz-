@@ -50,19 +50,19 @@ public:
 
 
 private:
-	struct DoubleVector2f
+	struct DoubleVector2i
 	{
 		int id0, id1;
-		sf::Vector2f val0, val1;
+		sf::Vector2i val0, val1;
 		sf::Color color;
 	};
 
-	DoubleVector2f dk, tp;
+	DoubleVector2i dk, tp;
 
 	struct Dane
 	{
-		std::vector<DoubleVector2f> DK, TP; 
-		sf::Vector2f xy;
+		std::vector<DoubleVector2i> DK, TP; 
+		sf::Vector2i xy;
 		int coin_min;
 	};
 

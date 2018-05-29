@@ -19,22 +19,22 @@ Player::Player()
 
 Player::~Player() {};
 
-void Player::Respawn(sf::Vector2f xy)
+void Player::Respawn(sf::Vector2i xy)
 {
-	sprite.setPosition(xy);
+	sprite.setPosition(static_cast<sf::Vector2f>(xy));
 
 }
-void Player::Move(sf::Vector2f xy)
+void Player::Move(sf::Vector2i xy)
 {
-	sprite.move(xy.x, xy.y);
+	sprite.move(static_cast<sf::Vector2f>(xy));
 }
 void Player::Draw(sf::RenderWindow &win)
 {
 	win.draw(sprite);
 }
-sf::Vector2f Player::getPosition()
+sf::Vector2i Player::getPosition()
 {
-	return sf::Vector2f(((sprite.getPosition().x - 8) / 16), (((sprite.getPosition().y - 64) - 8) / 16));
+	return sf::Vector2i(((static_cast<int>(sprite.getPosition().x) - 8) / 16), (((static_cast<int>(sprite.getPosition().y) - 64) - 8) / 16));
 }
 void Player::animation()
 {

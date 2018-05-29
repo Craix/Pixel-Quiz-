@@ -77,7 +77,7 @@ bool Level::loadMap(int selected_lvl)
 
 				if (poziom[x][y] == SPAWN)
 				{
-					dane.xy = sf::Vector2f((float)8 + (x * 16),(float)8 + (y * 16) + 64);
+					dane.xy = sf::Vector2i(8 + (x * 16),8 + (y * 16) + 64);
 				}
 			}
 		}
