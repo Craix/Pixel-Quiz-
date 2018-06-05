@@ -6,8 +6,8 @@
 class Player
 {
 private:
-	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Texture player_texture;
+	sf::Sprite player_sprite;
 	int player_animation_frame;
 
 public:

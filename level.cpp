@@ -34,21 +34,19 @@ bool Level::loadMap(int selected_lvl)
 		dane.DK.clear();
 		dane.TP.clear();
 
-
-
 		file_f >> key_nr;
 
 		for (int i = 0; i < key_nr; i++)
 		{
 			file_f >> dk.id0;
-			file_f >> dk.val0.y;
-			file_f >> dk.val0.x;
+			file_f >> dk.pos1.y;
+			file_f >> dk.pos1.x;
 
 			file_f >> dk.id1;
-			file_f >> dk.val1.y;
-			file_f >> dk.val1.x;
+			file_f >> dk.pos0.y;
+			file_f >> dk.pos0.x;
 
-			dk.color = sf::Color(lose_rgb(), lose_rgb(), lose_rgb());
+			dk.color = sf::Color(randUint8(), randUint8(), randUint8());
 			dane.DK.push_back(dk);
 		}
 
@@ -56,14 +54,14 @@ bool Level::loadMap(int selected_lvl)
 		for (int i = 0; i < tp_nr; i++)
 		{
 			file_f >> tp.id0;
-			file_f >> tp.val0.y;
-			file_f >> tp.val0.x;
+			file_f >> tp.pos1.y;
+			file_f >> tp.pos1.x;
 
 			file_f >> tp.id1;
-			file_f >> tp.val1.y;
-			file_f >> tp.val1.x;
+			file_f >> tp.pos0.y;
+			file_f >> tp.pos0.x;
 
-			tp.color = sf::Color(lose_rgb(), lose_rgb(), lose_rgb());
+			tp.color = sf::Color(randUint8(), randUint8(), randUint8());
 			dane.TP.push_back(tp);
 		}
 
@@ -73,9 +71,9 @@ bool Level::loadMap(int selected_lvl)
 		{
 			for (int x = 0; x < width_map; x++)
 			{
-				file_f >> poziom[x][y];
+				file_f >> layer[x][y];
 
-				if (poziom[x][y] == SPAWN)
+				if (layer[x][y] == SPAWN)
 				{
 					dane.xy = sf::Vector2i(8 + (x * 16),8 + (y * 16) + 64);
 				}
@@ -114,11 +112,7 @@ void Level::saveSave()
 
 	loadSave();
 
-	if (lvl >= lvl_to_save)
-	{
-
-	}
-	else
+	if (!lvl >= lvl_to_save)
 	{
 
 		file_o.open("save.txt");
@@ -129,15 +123,15 @@ void Level::saveSave()
 			return;
 		}
 
-		file_o << lvl_to_save << std::endl;
+		file_o << lvl_to_save << "\n";
 
 		file_o.close();
 	}
 
 }
 
-int Level::lose_rgb()
+sf::Uint8 Level::randUint8()
 {
-	return rand() % 257;
+	return rand() % 256;
 }
 

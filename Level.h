@@ -12,7 +12,7 @@ public:
 
 	~Level();
 
-	int lose_rgb();
+	sf::Uint8 randUint8();
 
 	bool loadMap(int lvl);
 
@@ -20,7 +20,7 @@ public:
 
 	void saveSave();
 
-	int lvl;
+	
 	enum FieldType
 	{
 		NONE, // 0
@@ -46,14 +46,13 @@ public:
 
 	FieldType Type;
 
-	const static int width_map = 32, height_map = 32, title_size = 16;
 
 
 private:
 	struct DoubleVector2i
 	{
 		int id0, id1;
-		sf::Vector2i val0, val1;
+		sf::Vector2i pos1, pos0;
 		sf::Color color;
 	};
 
@@ -72,8 +71,12 @@ private:
 	int lvl_to_save, key_nr, tp_nr;
 
 public:
+
+	const static int width_map = 32, height_map = 32, title_size = 16;
+
+	int lvl, layer[height_map][width_map];
+
 	Dane dane;
-	int poziom[height_map][width_map];
 
 };
 

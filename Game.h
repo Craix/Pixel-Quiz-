@@ -9,13 +9,15 @@ public:
 	~Game();
 	void runGame();
 
+	sf::RenderWindow window;
+
 private:
 	enum GameState { MENU, GAME, LVL, SAVE, END };
 	GameState state;
 
 	int width, height;
 
-	int wybrany_lvl;
+	int selected_lvl;
 	sf::Text text[3];
 
 	bool soundStatus;

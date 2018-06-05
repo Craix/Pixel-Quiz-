@@ -1,7 +1,6 @@
 #include "Game.h"
 
 
-sf::RenderWindow window(sf::VideoMode(512, 576), "Pixel Quiz");
 
 Game::Game()
 {
@@ -44,11 +43,13 @@ Game::Game()
 	headline.setCharacterSize(50);
 	headline.setString("Pixel & Quiz");
 	headline.setStyle(sf::Text::Bold);
-	headline.setFillColor(sf::Color::Color(255, 153, 0)); // #ff9900
+	headline.setFillColor(sf::Color(0xff9900ff)); // #ff9900
 
 	soundStatus = true;
 
-	wybrany_lvl = 0;
+	selected_lvl = 0;
+
+	window.create(sf::VideoMode(512,576),"Pixel & Quiz", sf::Style::Close);
 
 	state = MENU;
 }
@@ -153,7 +154,7 @@ void Game::menu()
 		{
 			if (text[i].getGlobalBounds().contains(mouse))
 			{
-				text[i].setFillColor(sf::Color::Color(255, 153, 0));
+				text[i].setFillColor(sf::Color(0xff9900ff));
 			}
 			else
 			{
@@ -177,7 +178,7 @@ void Game::menu()
 void Game::single()
 {
 
-	engine.runEngine(window, background, sound_button, wybrany_lvl, music, soundStatus, headline);
+	engine.runEngine(window, background, sound_button, selected_lvl, music, soundStatus, headline);
 
 	state = MENU;
 }
@@ -197,14 +198,13 @@ void Game::lvl()
 	lvl_numbers.setFont(font);
 	lvl_numbers.setCharacterSize(50);
 	lvl_numbers.setStyle(sf::Text::Bold);
-	lvl_numbers.setFillColor(sf::Color::Color(255, 153, 0)); // #ff9900
+	lvl_numbers.setFillColor(sf::Color(0xff9900ff)); // #ff9900
 
 	level.loadSave();
 
 #pragma endregion
 
-	std::vector <sf::Sprite> lvl_field;
-	lvl_field.resize(16);
+	std::vector <sf::Sprite> lvl_field(16);
 
 	for (int y = 0; y < 4; y++)
 	{
@@ -233,7 +233,7 @@ void Game::lvl()
 					event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
 				{
 
-					wybrany_lvl = i + 1;
+					selected_lvl = i + 1;
 					state = GAME;
 				}
 			}

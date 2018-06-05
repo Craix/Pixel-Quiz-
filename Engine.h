@@ -23,8 +23,8 @@ private:
 	Player player;
 	Level level;
 
-	sf::RectangleShape race;
-	bool tp, wat, game_status, sound_status; 
+	sf::RectangleShape color_border;
+	bool teleport_sound, water_sound, game_status, sound_status; 
 	sf::SoundBuffer buffer[4];
 	sf::Sound sound_effect[4];
 
@@ -42,7 +42,7 @@ private:
 	int money_animation_frame;
 
 	sf::Texture tiled_set, level_set;
-	sf::Sprite tiled[Level::COUNT], win, menu, restart;
+	sf::Sprite tiled[Level::COUNT], comunicat_window, menu_button, restart_button;
 
 };
 
