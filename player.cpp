@@ -11,10 +11,9 @@ Player::Player()
 
 	player_animation_frame = 0;
 
-	animation();
-
 	player_sprite.setOrigin(8, 8);
 	player_sprite.setTexture(player_texture);
+	animation(); 
 }
 
 Player::~Player() {};

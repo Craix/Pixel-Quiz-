@@ -11,7 +11,7 @@ public:
 	Engine();
 	~Engine(void);
 
-	void runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Sprite &sound_button, int selected_lvl, sf::Music &music, bool &soudStatus, sf::Text &text);
+	void runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Sprite &sound_button, int selected_lvl, sf::Music &music, bool &soundStatus, sf::Text &text);
 	bool colision(sf::Vector2i xy);
 	void water(sf::Vector2i xy);
 	void update(sf::Vector2i xy);

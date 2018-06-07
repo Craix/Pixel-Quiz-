@@ -136,6 +136,7 @@ void Game::menu()
 				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
 			{
 				soundStatus = !soundStatus;
+
 				if (soundStatus)
 				{
 					sound_button.setTextureRect(sf::IntRect(0, 0, 32, 32));
@@ -241,7 +242,10 @@ void Game::lvl()
 			if ((sound_button.getGlobalBounds().contains(mouse) && 
 				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left))
 			{
-				if (music.getStatus() == sf::Sound::Status::Paused)
+
+				soundStatus = !soundStatus;
+
+				if (soundStatus)
 				{
 					sound_button.setTextureRect(sf::IntRect(0, 0, 32, 32));
 					music.play();
@@ -251,6 +255,8 @@ void Game::lvl()
 					sound_button.setTextureRect(sf::IntRect(32, 0, 32, 32));
 					music.pause();
 				}
+
+				
 			}
 		}
 

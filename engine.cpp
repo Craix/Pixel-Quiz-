@@ -1,5 +1,7 @@
 #include "Engine.h"
 
+#include <iostream> 
+
 
 Engine::Engine()
 { 
@@ -54,14 +56,15 @@ Engine::Engine()
 
 Engine::~Engine() {};
 
-void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Sprite &sound_button, int selected_lvl, sf::Music &music, bool &soudStatus, sf::Text &text)
+void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Sprite &sound_button, int selected_lvl, sf::Music &music, bool &soundStatus, sf::Text &text)
 {
 	teleport_sound = false;
 	water_sound = false;
 
-	sound_status = &soudStatus;f
+	sound_status = soundStatus;
 
 	money_animation_frame = 0;
+
 	text.setPosition(0, 0);
 
 	level.loadSave();
@@ -82,7 +85,7 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 	{
 		time = clock.getElapsedTime();
 
-		if (static_cast<int>(time.asSeconds()) == 1)
+		if (time.asSeconds() > 1)
 		{
 			player.animation();
 			animation();
@@ -124,6 +127,7 @@ void Engine::runEngine(sf::RenderWindow &window, sf::Sprite &Background, sf::Spr
 					sound_button.setTextureRect(sf::IntRect(32, 0, 32, 32));
 					music.pause();
 				}
+				
 			}
 
 			if (!block(player.getPosition()))
@@ -444,7 +448,7 @@ void Engine::animation()
 	case 3:
 	{
 		tiled[2].setTextureRect(sf::IntRect(48, 16, 16, 16));
-		money_animation_frame = 0;
+		money_animation_frame = -1;
 		break;
 	}
 	}

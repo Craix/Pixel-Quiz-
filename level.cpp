@@ -112,9 +112,8 @@ void Level::saveSave()
 
 	loadSave();
 
-	if (!lvl >= lvl_to_save)
+	if(lvl < lvl_to_save)
 	{
-
 		file_o.open("save.txt");
 
 		if (!file_o.is_open())
